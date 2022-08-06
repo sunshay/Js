@@ -1,20 +1,22 @@
-// create express webserver 
-var express = require("express");
-var bodyParser = require("body-parser");
-// var router = express.Router();
-var app = express();
+const express = require('express');
+const bodyParser = require('body-parser');
+const app = express();
 
-// Here we are configuring express to use body-parser as middle-ware
-app.get('/',function(req,res){
-  res.sendfile("index.html");
-});
+app.use(bodyParser.urlencoded({ extended: false }));
+app.get('/', (req, res) => {
+    res.sendFile(__dirname + '/static/index.html');
+  });
+  app.get('/login', (req, res) => {
+    res.sendFile(__dirname + '/static/login.html');
+  });
+app.post('/login', (req, res) => {
+    // Insert Login Code Here
+    let username = req.body.username;
+    let password = req.body.password;
+    res.send(`Username: ${username} Password: ${password}`);
+  });
+const port = 3000 // Port we will listen on
 
-app.post('/login',function(req,res){
-    var user_name=req.body.user;
-    var password=req.body.password;
-});
-
-app.listen(3000,function(){
-    console.log("started on PORT 3000")
-})
-
+  // Function to listen on the port
+app.listen(port, () => console.log(`This app is listening on port ${port}`));
+  
